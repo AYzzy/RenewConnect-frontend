@@ -1,8 +1,15 @@
+import Navbar from "./Component/NavBar"
+import Header from "./Component/Header"
+import Achievement from "./Component/Achievement"
+import AuthForm from "./Component/Auth"
 function App() {
 
   return (
     <>
-     <h1>This is solarix</h1>
+      <Navbar />
+      <Header />
+      <Achievement />
+      <AuthForm />
     </>
   )
 }

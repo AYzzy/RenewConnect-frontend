@@ -1,0 +1,12 @@
+.logo{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.logo .icon{
+    font-size: 2rem;
+    color: var(--primary-color);
+}
+.logo  .name{
+    font-size: 1.5rem;
+}
