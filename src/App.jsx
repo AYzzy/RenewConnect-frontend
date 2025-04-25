@@ -5,6 +5,7 @@ import AuthForm from "./Component/Auth"
 import Renewable from "./Component/Renewable"
 import Partners from "./Component/Partners"
 import Statistics from "./Component/Statistics"
+import Footer from "./Component/Footer"
 function App() {
 
   return (
@@ -15,6 +16,7 @@ function App() {
       <Statistics/>
       <Partners/>
       <Achievement />
+      <Footer/>
       {/* <AuthForm /> */}
     </>
   )

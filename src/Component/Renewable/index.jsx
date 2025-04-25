@@ -15,6 +15,7 @@ const Renewable = () =>{
                     <p className='' id='Renewable_sub'>By selling recycled waste materials in high demand by recyclers and green businesses
 
                     </p>
+                    <button className='btn btn-success text-white' id='renew-btn'>Start a GreenProject Today</button>
                 </div>
                 
             </div>
