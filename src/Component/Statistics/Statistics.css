@@ -1,0 +1,29 @@
+
+  
+ .stat-card{
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow:0 4px rgba(0,  0 ,  0.1);
+    width:380px;
+    margin: 10px;
+ }
+ .stat-card h3{
+    margin: 0 0 10px;
+    font-size: 30px;
+    color: green;
+ }
+ .stat-card p{
+    font-size: 14px;
+    color:green;
+ }
+.statistics-wrapper{
+    display:flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+    justify-items: center;
+    margin-top: 100px;
+    margin-bottom: 30px;
+}
+  

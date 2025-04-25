@@ -1,0 +1,78 @@
+
+  
+  .partners-header {
+    text-align: center;
+    margin-bottom: 100px;
+  }
+  
+  .partners-header h1 {
+    font-size: 3.5rem;
+    margin: 0 0 15px 0;
+    margin-top: 100px;
+    color: green;
+  }
+  
+  .partners-description {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color:white;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  
+  .divider {
+    height: 1px;
+    background-color:green;
+    margin: 30px 0;
+  } 
+  
+  .partner-section {
+    margin-bottom: 40px;
+  }
+  
+  .section-title {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: #444;
+  }
+  
+  .partner-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+  }
+  
+  /* .partner_item {
+    background: #f9f9f9;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3s ease;
+  }
+   */
+  /* .partner_item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  } */
+  
+  /* .partner_icon {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+  } */
+  
+  /* .icon_badge {
+    background: #2c3e50;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+  } */
+  
+  /* .partner_name {
+    margin: 0;
+    font-size: 1.1rem;
+    color: #2c3e50;
+  }  */

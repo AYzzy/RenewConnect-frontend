@@ -55,6 +55,7 @@ import { FaTimes } from 'react-icons/fa'
         }
       </div>
       <div className='box'>
+        <Link to='contact' className='btn contact_btn'>Login</Link>
         <Link to='contact' className='btn contact_btn'>Get Started</Link>
         <div 
           className='icon_container menu_btn'

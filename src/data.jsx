@@ -10,8 +10,8 @@ export const navTabs = [
     {name:"About Us",id:'about'},
     {name:"Services",id:'services'},
     {name:"Team",id:'team'},
-    {name:"Project",id:'project'},
-    {name:"Clients",id:'testimonial'},
+    {name:"GreenProject",id:'project'},
+    {name:"WasteMarketPlace",id:'testimonial'},
     {name:"FAQ",id:'faq'},
     {name:"Contact",id:'contact'},
 ];
@@ -255,8 +255,8 @@ export const footer = [
         {name:"About Us",id:'about'},
         {name:"Services",id:'services'},
         {name:"Team",id:'team'},
-        {name:"Project",id:'project'},
-        {name:"Clients",id:'testimonial'},
+        {name:"GreenProject",id:'project'},
+        {name:"WasteMarketPlace",id:'testimonial'},
         {name:"FAQ",id:'faq'},
         {name:"Contact",id:'contact'},
       ]
