@@ -14,9 +14,8 @@
     
 }
 .navbar.box,
-.box btn{
-    padding: 20px;
-    margin: 10px;
+.box .contact_btn{
+   margin-left: 20px;
 }
 .navbar .nav_tabs{
     display:flex;

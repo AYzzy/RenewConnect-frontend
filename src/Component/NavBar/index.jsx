@@ -1,10 +1,12 @@
  import React, { useEffect } from 'react'
  import './Navbar.css'
  import {navTabs} from '../../data'
- import { Link } from 'react-scroll'
+ import { Link } from 'react-router-dom'
  import { RiMenu3Fill } from 'react-icons/ri'
  import Logo from '../Logo'
 import { FaTimes } from 'react-icons/fa'
+import {useNavigate} from 'react-router-dom'
+import AuthForm from '../Auth'
 
  const  Navbar = () => {
     const [open,setOpen] = React.useState(false)
@@ -55,8 +57,7 @@ import { FaTimes } from 'react-icons/fa'
         }
       </div>
       <div className='box'>
-        <Link to='contact' className='btn contact_btn'>Login</Link>
-        <Link to='contact' className='btn contact_btn'>Get Started</Link>
+        <Link to='/Auth' className='btn contact_btn'>Get Started</Link>
         <div 
           className='icon_container menu_btn'
           onClick={() => setOpen(!open)}
