@@ -1,0 +1,28 @@
+.renewable_wrapper{
+    display:flex;
+    margin: 0 170px;
+    justify-content: center;
+    align-items: center;
+    color:green;
+    margin-bottom: 50px;
+    
+}
+.img_wrap{
+    width:400px;
+    margin-right: 50px;
+    
+}
+#Renewable_sub{
+    color:white;
+}
+#Renewable_title{
+    font-size: 45px;
+    
+}
+#renew-btn{
+     margin-top: 30px;
+     margin-left: 180px;
+     font-size: large;
+    color: white;
+    
+}

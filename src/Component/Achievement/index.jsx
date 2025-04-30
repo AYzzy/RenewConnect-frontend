@@ -37,10 +37,11 @@ const Achievement = () => {
         scrollTrigger: {
           trigger: container.current,
           start: 'top buttom',
-          end: 'bottom top',
-          onEnter:updateData,
-          onLeaveBack: resetData,
-        },
+          end: 'buttom top',
+          scrub:0,
+          onEnter: () => {updateData()},
+          onLeaveBack: () => {resetData()},
+        }
       });
       return () => {
         timeline.revert();
@@ -76,7 +77,7 @@ const Achievement = () => {
                   value={projects}  
                   className="title"  
                 />  
-                <h1 className="title">K</h1>  
+                <h1 className="title">+</h1>  
               </div>  
               <small className="text_muted">Completed Projects</small>  
             </div>  
@@ -92,7 +93,7 @@ const Achievement = () => {
                   value={team}  
                   className="title"  
                 />  
-                <h1 className="title">+</h1>  
+                <h1 className="title">k</h1>  
               </div>  
               <small className="text_muted">Expert worker</small>  
             </div>  

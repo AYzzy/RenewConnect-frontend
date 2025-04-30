@@ -6,15 +6,15 @@ import SolarSystem from '../SolarSystem';
 
 const Header = () => {
   return (
-    <header  id='header'>
+    <header id='header'>
         <div className='system_wrapper'>
             <SolarSystem />
         </div>
        <div className='container full_height blur-effect'>
         <div className='column'>
             <h1 className='title'>
-                Revolutionary Home 
-                <span className='g-text'> Solar System</span>
+                One Stop financing for Productive Energy Needs..
+                <span className='g-text'> Finance Your Renewable Energy project</span>
             </h1>
             <p className='text_muted'>
                 Harness the power of the sun with our cutting-edge solar technology. 

@@ -1,0 +1,223 @@
+.waste-market {
+    background-color: #1a1a1a;
+    color: white;
+    padding: 3rem 2rem;
+    min-height: 100vh;
+  }
+  
+  .waste-market h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    color: #16a34a;
+  }
+  
+  .waste-market h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: #00ff88;
+  }
+  
+  /* Form Section */
+  .offer-form {
+    background-color: #2a2a2a;
+    padding: 2rem;
+    border-radius: 10px;
+    margin-bottom: 3rem;
+    box-shadow: 0 0 10px rgba(0, 255, 136, 0.2);
+  }
+  
+  .offer-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .form-group label {
+    font-size: 1rem;
+    color: #00ff88;
+  }
+  
+  .form-group.description {
+    flex: 1;
+  }
+  
+  .offer-form input,
+  .offer-form textarea {
+    padding: 12px;
+    background-color: #333;
+    color: white;
+    border: 1px solid #00ff88;
+    border-radius: 5px;
+    outline: none;
+    font-size: 1rem;
+  }
+  
+  .offer-form textarea {
+    min-height: 120px;
+    resize: vertical;
+  }
+  
+  .form-actions {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .offer-form button {
+    background-color: #16a34a;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-weight: 600;
+  }
+  
+  .offer-form button:hover {
+    background-color: #13863e;
+  }
+  
+  .offer-form .cancel-btn {
+    background-color: #555;
+  }
+  
+  .offer-form .cancel-btn:hover {
+    background-color: #444;
+  }
+  
+  /* Filter Section */
+  .filter-section {
+    background-color: #2a2a2a;
+    padding: 2rem;
+    border-radius: 10px;
+    margin-bottom: 3rem;
+    box-shadow: 0 0 10px rgba(0, 255, 136, 0.2);
+  }
+  
+  .filters {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .quantity-range {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .quantity-range div {
+    flex: 1;
+  }
+  
+  .filters input {
+    padding: 12px;
+    background-color: #333;
+    color: white;
+    border: 1px solid #00ff88;
+    border-radius: 5px;
+    outline: none;
+    font-size: 1rem;
+    width: 100%;
+  }
+  
+  /* Offers List */
+  .offers-list {
+    margin-bottom: 3rem;
+  }
+  
+  .offer-card {
+    background-color: #333;
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+    border: 1px solid #00ff88;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2rem;
+  }
+  
+  .offer-details p {
+    margin: 0.5rem 0;
+  }
+  
+  .offer-actions {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .offer-actions button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  
+  .offer-actions .edit-btn {
+    background-color: #16a34a;
+    color: white;
+  }
+  
+  .offer-actions .edit-btn:hover {
+    background-color: #13863e;
+  }
+  
+  .offer-actions .delete-btn {
+    background-color: #ff4444;
+    color: white;
+  }
+  
+  .offer-actions .delete-btn:hover {
+    background-color: #cc3333;
+  }
+  
+  /* History Section */
+  .offer-history {
+    background-color: #2a2a2a;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 255, 136, 0.2);
+  }
+  
+  .history-item {
+    padding: 1rem 0;
+    border-bottom: 1px solid #00ff88;
+  }
+  
+  .history-item p {
+    margin: 0;
+  }
+  
+  @media (min-width: 768px) {
+    .filters {
+      flex-direction: row;
+      gap: 2rem;
+    }
+  
+    .offer-form form {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+  
+    .form-group {
+      flex: 1;
+      min-width: 200px;
+    }
+  
+    .form-group.description {
+      flex: 2;
+    }
+  
+    .offer-card {
+      padding: 2rem;
+    }
+  }

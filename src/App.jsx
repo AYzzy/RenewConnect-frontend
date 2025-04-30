@@ -1,17 +1,36 @@
-import Navbar from "./Component/NavBar"
-import Header from "./Component/Header"
-import Achievement from "./Component/Achievement"
-import AuthForm from "./Component/Auth"
-function App() {
+import Navbar from "./Component/NavBar";
+import Header from "./Component/Header";
+import Achievement from "./Component/Achievement";
+import AuthForm from "./Component/Auth";
+import Statistics from "./Component/Statistics"
+import WasteMarket from "./Component/Waste";
+import Renewable from "./Component/Renewable"
+import Footer from "./Component/Footer";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
+const App = () => {
   return (
-    <>
-      <Navbar />
-      <Header />
-      <Achievement />
-      <AuthForm />
-    </>
-  )
-}
+    <Router>
+      {location.pathname !== "/marketplace" && <Navbar />}
+      {/* <Navbar /> */}
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <>
+              <Header />
+              <Achievement />
+              <Renewable />
+              <Statistics />
+              <Footer />
+            </>
+          }
+        />
+        <Route path="/auth" element={<AuthForm />} />
+        <Route path="/marketplace" element={<WasteMarket />} />
+      </Routes>
+    </Router>
+  );
+};
 
-export default App
+export default App;

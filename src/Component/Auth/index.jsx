@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
 import './AuthForm.css';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
 
 const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(true);
+  const navigate = useNavigate(); // Hook for navigation
 
   const toggleMode = () => setIsLogin(!isLogin);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // handle auth logic here
-    alert(`${isLogin ? 'Logging in' : 'Signing up'}...`);
+    // Mock auth logic (replace with real authentication in the future)
+    console.log(`${isLogin ? 'Logging in' : 'Signing up'}...`);
+    // On successful login/signup, redirect to marketplace
+    navigate('/marketplace');
   };
 
   return (

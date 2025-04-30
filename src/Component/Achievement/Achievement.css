@@ -45,7 +45,7 @@
 }
 
 @media (max-width: 900px) {
-  .achievement_container .achievement {
+  .achievement_container .container {
     grid-template-columns: repeat(2,1fr);
   }
   
