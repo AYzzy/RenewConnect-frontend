@@ -57,7 +57,8 @@ import AuthForm from '../Auth'
         }
       </div>
       <div className='box'>
-        <Link to='/Auth' className='btn contact_btn'>Get Started</Link>
+        <Link to='/Login' className='btn contact_btn'>Login</Link>
+        <Link to ='/Getstarted' className='btn contact_btn'>Get Started</Link>
         <div 
           className='icon_container menu_btn'
           onClick={() => setOpen(!open)}

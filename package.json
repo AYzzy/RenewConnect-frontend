@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@gsap/react": "^2.1.1",
+    "@popperjs/core": "^2.11.8",
+    "bootstrap": "^5.3.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^5.2.1",

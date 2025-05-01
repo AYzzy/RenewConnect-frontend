@@ -1,0 +1,16 @@
+.container{
+
+  display: flex; 
+  justify-content:space-between; 
+  align-items: center;
+  color: green;
+  padding: 2rem;
+  height: 100vh;
+}
+.section{
+    max-width: 45%;
+    text-align: center;
+}
+.btn-success{
+  font-size: large;
+}

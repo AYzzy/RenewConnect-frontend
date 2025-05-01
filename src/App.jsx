@@ -7,17 +7,18 @@ import AuthForm from "./Component/Auth"
 import Renewable from "./Component/Renewable"
 import Partners from "./Component/Partners"
 import Statistics from "./Component/Statistics"
+import Market from "./Component/Market"
 import Footer from "./Component/Footer"
 
 function App() {
 
   return (
-    <Router>
-      <Navbar>
-        <Link to="/Auth">Form Page</Link>
-      </Navbar>
+    <>
+      <Navbar/>
+       
       <Routes>
-          <Route path='/Auth'element={<AuthForm />}/>
+          <Route path='/Login'element={<AuthForm />}/>
+          <Route path='/Getstarted'element={<Market />}/>
         </Routes>
       
       <Header />
@@ -26,7 +27,8 @@ function App() {
       <Partners/>
       <Achievement />
       <Footer/>
-    </Router>
+    </>
+    
   )
 }
 
