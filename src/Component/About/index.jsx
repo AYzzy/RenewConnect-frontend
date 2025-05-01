@@ -25,7 +25,7 @@ const About = () => {
                     Thank you for considering us as your solar partner!
                 </p>
                 <div className="group">
-                    {/* Start row */}
+                    
                     <div className="row">
                         <div className="icon_container">
                             <FaCheck/>
@@ -44,8 +44,7 @@ const About = () => {
                             <h3>Engineers</h3>
                         </div>
                     </div>
-                    {/* End row */}
-                    {/* Start row */}
+                    
                     <div className="row">
                         <div className="icon_container">
                             <FaCheck/>
@@ -55,8 +54,7 @@ const About = () => {
                             <h3>Support</h3>
                         </div>
                     </div> 
-                    {/* End row */}
-                     {/* Start row */}
+                    
                      <div className="row">
                         <div className="icon_container">
                             <FaCheck/>
@@ -66,7 +64,7 @@ const About = () => {
                             <h3>Service</h3>
                         </div>
                     </div> 
-                    {/* End row */}  
+                     
                 </div>
                 <div className="buttons_container">
                     <Link to='project' smooth={true} className='btn'>Explore</Link>
