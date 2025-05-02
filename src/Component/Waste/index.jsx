@@ -1,88 +1,175 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './WasteMarket.css';
 
 const WasteMarket = () => {
-  const [offers, setOffers] = useState([
-    { id: 1, user: 'user1', type: 'Plastic', quantity: 100, price: 50, description: 'Plastic waste from packaging', createdAt: '2025-04-25T10:00:00Z' },
-    { id: 2, user: 'user1', type: 'Organic', quantity: 200, price: 30, description: 'Organic waste from farm', createdAt: '2025-04-24T09:00:00Z' },
-    { id: 3, user: 'user2', type: 'Plastic', quantity: 150, price: 40, description: 'Recyclable plastic', createdAt: '2025-04-23T08:00:00Z' },
-  ]);
-
-  const [newOffer, setNewOffer] = useState({ user: 'user1', type: '', quantity: '', price: '', description: '' });
+  const [offers, setOffers] = useState([]);
+  const [newOffer, setNewOffer] = useState({
+    user: 'user1',
+    wasteType: '',
+    quantity: '',
+    price: '',
+    unitOfMeasure: '',
+    location: '',
+    wasteCondition: '',
+    availableFrom: '',
+    description: '',
+  });
   const [editOfferId, setEditOfferId] = useState(null);
-  const [filterUser, setFilterUser] = useState('');
-  const [quantityRange, setQuantityRange] = useState({ min: '', max: '' });
-  const [filterType, setFilterType] = useState('');
+
+  // Fetch all waste offers on component mount
+  useEffect(() => {
+    fetchAllOffers();
+  }, []);
+
+  // Fetch all waste offers from the backend
+  const fetchAllOffers = async () => {
+    try {
+      const response = await fetch('http://localhost:8058/api/waste-offers/get-All');
+      if (response.ok) {
+        const data = await response.json();
+        setOffers(data);
+      } else {
+        console.error('Failed to fetch offers');
+      }
+    } catch (error) {
+      console.error('Error fetching offers:', error);
+    }
+  };
 
   const handleInputChange = (e) => {
     setNewOffer({ ...newOffer, [e.target.name]: e.target.value });
   };
 
-  const handleCreateOrUpdateOffer = (e) => {
+  const handleCreateOrUpdateOffer = async (e) => {
     e.preventDefault();
-    if (editOfferId) {
-      setOffers(offers.map(offer => 
-        offer.id === editOfferId ? { ...offer, ...newOffer, createdAt: new Date().toISOString() } : offer
-      ));
-      setEditOfferId(null);
-    } else {
-      const newId = offers.length ? offers[offers.length - 1].id + 1 : 1;
-      setOffers([...offers, { id: newId, ...newOffer, createdAt: new Date().toISOString() }]);
+    try {
+      if (editOfferId) {
+        const response = await fetch('http://localhost:8058/api/waste-offers/update', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ id: editOfferId, ...newOffer }),
+        });
+        if (response.ok) {
+          await fetchAllOffers();
+          setEditOfferId(null);
+        }
+      } else {
+        const response = await fetch('http://localhost:8058/api/waste-offers/create', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(newOffer),
+        });
+        if (response.ok) {
+          await fetchAllOffers();
+        }
+      }
+      setNewOffer({
+        user: 'user1',
+        wasteType: '',
+        quantity: '',
+        price: '',
+        unitOfMeasure: '',
+        location: '',
+        wasteCondition: '',
+        availableFrom: '',
+        description: '',
+      });
+    } catch (error) {
+      console.error('Error saving offer:', error);
     }
-    setNewOffer({ user: 'user1', type: '', quantity: '', price: '', description: '' });
   };
 
   const handleEditOffer = (offer) => {
-    setNewOffer({ user: offer.user, type: offer.type, quantity: offer.quantity, price: offer.price, description: offer.description });
+    setNewOffer({
+      user: offer.user,
+      wasteType: offer.wasteType,
+      quantity: offer.quantity.toString(),
+      price: offer.price.toString(),
+      unitOfMeasure: offer.unitOfMeasure,
+      location: offer.location,
+      wasteCondition: offer.wasteCondition,
+      availableFrom: offer.availableFrom,
+      description: offer.description,
+    });
     setEditOfferId(offer.id);
   };
 
-  const handleDeleteOffer = (id) => {
-    setOffers(offers.filter(offer => offer.id !== id));
+  const handleDeleteOffer = async (id) => {
+    try {
+      const response = await fetch('http://localhost:8058/api/waste-offers/delete', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id }),
+      });
+      if (response.ok) {
+        await fetchAllOffers();
+      }
+    } catch (error) {
+      console.error('Error deleting offer:', error);
+    }
   };
 
-  const findWasteOffersByUser = () => {
-    return filterUser ? offers.filter(offer => offer.user === filterUser) : offers;
-  };
-
-  const findWasteOffersByQuantityRange = () => {
-    const min = parseInt(quantityRange.min) || 0;
-    const max = parseInt(quantityRange.max) || Infinity;
-    return offers.filter(offer => offer.quantity >= min && offer.quantity <= max);
-  };
-
-  const findWasteOfferByType = () => {
-    return filterType ? offers.filter(offer => offer.type.toLowerCase() === filterType.toLowerCase()) : offers;
+  const handleLogout = async () => {
+    try {
+      const response = await fetch('http://localhost:8058/api/auth/logout', {
+        method: 'POST',
+        credentials: 'include', // Include cookies if needed for authentication
+      });
+  
+      if (response.ok) {
+        console.log('User logged out successfully');
+        window.location.href = '/auth'; // Redirect to login page
+      } else {
+        console.error('Failed to log out');
+      }
+    } catch (error) {
+      console.error('Error during logout:', error);
+    }
   };
 
   const getWasteOfferHistory = () => {
     return offers.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
   };
 
-  let filteredOffers = offers;
-  if (filterUser) filteredOffers = findWasteOffersByUser();
-  if (quantityRange.min || quantityRange.max) filteredOffers = findWasteOffersByQuantityRange();
-  if (filterType) filteredOffers = findWasteOfferByType();
-
   return (
     <div className="waste-market">
+      {/* Logout Button */}
+      <div className="logout-container">
+        <button className="logout-btn" onClick={handleLogout}>
+          Logout
+        </button>
+      </div>
+
       <h1>Waste Marketplace</h1>
 
-      {/* Create/Update Waste Offer Form */}
+      
       <section className="offer-form">
         <h2>{editOfferId ? 'Update Waste Offer' : 'Create Waste Offer'}</h2>
         <form onSubmit={handleCreateOrUpdateOffer}>
           <div className="form-group">
-            <label htmlFor="type">Waste Type</label>
-            <input
-              id="type"
-              type="text"
-              name="type"
-              placeholder="e.g., Plastic, Organic"
-              value={newOffer.type}
+            <label htmlFor="wasteType">Waste Type</label>
+            <select
+              id="wasteType"
+              name="wasteType"
+              value={newOffer.wasteType}
               onChange={handleInputChange}
               required
-            />
+            >
+              <option value="">Select Waste Type</option>
+              <option value="AGRICULTURAL_WASTE">Agricultural Waste</option>
+              <option value="PLASTIC_WASTE">Plastic Waste</option>
+              <option value="FOOD_WASTE">Food Waste</option>
+              <option value="WOOD_CHIPS">Wood Chips</option>
+              <option value="ANIMAL_WASTE">Animal Waste</option>
+              <option value="TEXTILE_WASTE">Textile Waste</option>
+              <option value="USED_TIRES">Used Tires</option>
+            </select>
           </div>
           <div className="form-group">
             <label htmlFor="quantity">Quantity (kg)</label>
@@ -90,20 +177,72 @@ const WasteMarket = () => {
               id="quantity"
               type="number"
               name="quantity"
-              placeholder="e.g., 100"
+              placeholder="e.g., 500"
               value={newOffer.quantity}
               onChange={handleInputChange}
               required
             />
           </div>
           <div className="form-group">
-            <label htmlFor="price">Price ($)</label>
+            <label htmlFor="price">Price (#)</label>
             <input
               id="price"
               type="number"
               name="price"
-              placeholder="e.g., 50"
+              placeholder="e.g., 100"
               value={newOffer.price}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="unitOfMeasure">Unit of Measure</label>
+            <input
+              id="unitOfMeasure"
+              type="text"
+              name="unitOfMeasure"
+              placeholder="e.g., kg"
+              value={newOffer.unitOfMeasure}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="location">Location</label>
+            <input
+              id="location"
+              type="text"
+              name="location"
+              placeholder="e.g., Springfield Farm"
+              value={newOffer.location}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="wasteCondition">Condition</label>
+            <select
+              id="wasteCondition"
+              name="wasteCondition"
+              value={newOffer.wasteCondition}
+              onChange={handleInputChange}
+              required
+            >
+              <option value="">Select Condition</option>
+              <option value="DRY">Dry</option>
+              <option value="WET">Wet</option>
+              <option value="COMPACTED">Compacted</option>
+              <option value="LOOSE">Loose</option>
+              <option value="PACKAGED">Packaged</option>
+            </select>
+          </div>
+          <div className="form-group">
+            <label htmlFor="availableFrom">Available From</label>
+            <input
+              id="availableFrom"
+              type="date"
+              name="availableFrom"
+              value={newOffer.availableFrom}
               onChange={handleInputChange}
               required
             />
@@ -122,10 +261,24 @@ const WasteMarket = () => {
           <div className="form-actions">
             <button type="submit">{editOfferId ? 'Update Offer' : 'Create Offer'}</button>
             {editOfferId && (
-              <button type="button" className="cancel-btn" onClick={() => {
-                setEditOfferId(null);
-                setNewOffer({ user: 'user1', type: '', quantity: '', price: '', description: '' });
-              }}>
+              <button
+                type="button"
+                className="cancel-btn"
+                onClick={() => {
+                  setEditOfferId(null);
+                  setNewOffer({
+                    user: 'user1',
+                    wasteType: '',
+                    quantity: '',
+                    price: '',
+                    unitOfMeasure: '',
+                    location: '',
+                    wasteCondition: '',
+                    availableFrom: '',
+                    description: '',
+                  });
+                }}
+              >
                 Cancel
               </button>
             )}
@@ -133,88 +286,15 @@ const WasteMarket = () => {
         </form>
       </section>
 
-      {/* Filter Section */}
-      <section className="filter-section">
-        <h2>Filter Waste Offers</h2>
-        <div className="filters">
-          <div className="form-group">
-            <label htmlFor="filter-user">Filter by User</label>
-            <input
-              id="filter-user"
-              type="text"
-              placeholder="e.g., user1"
-              value={filterUser}
-              onChange={(e) => setFilterUser(e.target.value)}
-            />
-          </div>
-          <div className="form-group quantity-range">
-            <div>
-              <label htmlFor="min-quantity">Min Quantity</label>
-              <input
-                id="min-quantity"
-                type="number"
-                placeholder="e.g., 50"
-                value={quantityRange.min}
-                onChange={(e) => setQuantityRange({ ...quantityRange, min: e.target.value })}
-              />
-            </div>
-            <div>
-              <label htmlFor="max-quantity">Max Quantity</label>
-              <input
-                id="max-quantity"
-                type="number"
-                placeholder="e.g., 200"
-                value={quantityRange.max}
-                onChange={(e) => setQuantityRange({ ...quantityRange, max: e.target.value })}
-              />
-            </div>
-          </div>
-          <div className="form-group">
-            <label htmlFor="filter-type">Filter by Type</label>
-            <input
-              id="filter-type"
-              type="text"
-              placeholder="e.g., Plastic"
-              value={filterType}
-              onChange={(e) => setFilterType(e.target.value)}
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* Waste Offers List */}
-      <section className="offers-list">
-        <h2>Waste Offers</h2>
-        {filteredOffers.length ? (
-          filteredOffers.map(offer => (
-            <div key={offer.id} className="offer-card">
-              <div className="offer-details">
-                <p><strong>Type:</strong> {offer.type}</p>
-                <p><strong>Quantity:</strong> {offer.quantity} kg</p>
-                <p><strong>Price:</strong> ${offer.price}</p>
-                <p><strong>Description:</strong> {offer.description}</p>
-                <p><strong>User:</strong> {offer.user}</p>
-                <p><strong>Created:</strong> {new Date(offer.createdAt).toLocaleString()}</p>
-              </div>
-              <div className="offer-actions">
-                <button className="edit-btn" onClick={() => handleEditOffer(offer)}>Edit</button>
-                <button className="delete-btn" onClick={() => handleDeleteOffer(offer.id)}>Delete</button>
-              </div>
-            </div>
-          ))
-        ) : (
-          <p>No waste offers found.</p>
-        )}
-      </section>
-
       {/* Waste Offer History */}
       <section className="offer-history">
         <h2>Waste Offer History</h2>
         {getWasteOfferHistory().length ? (
-          getWasteOfferHistory().map(offer => (
+          getWasteOfferHistory().map((offer) => (
             <div key={offer.id} className="history-item">
               <p>
-                <strong>{offer.type}</strong> - {offer.quantity} kg - ${offer.price} by {offer.user} on {new Date(offer.createdAt).toLocaleString()}
+                <strong>{offer.wasteType}</strong> - {offer.quantity} kg - ${offer.price} by {offer.user} on{' '}
+                {new Date(offer.createdAt).toLocaleString()}
               </p>
             </div>
           ))

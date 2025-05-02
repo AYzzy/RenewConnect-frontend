@@ -16,3 +16,11 @@
 .logo .color_primary {
     color: white; 
 }
+.color_primary{
+    color: green; 
+}
+
+.color_primary:hover {
+    color: green; 
+    transition: color 0.3s ease; 
+}

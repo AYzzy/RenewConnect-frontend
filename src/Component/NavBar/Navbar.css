@@ -97,6 +97,18 @@
         display: none;
     }
 }
-.nav_tabs .contact_btn{
-    color: white;
-}
+.contact_btn {
+    background-color: white;
+    color:white; 
+    padding: 10px 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+  }
+  
+  .contact_btn:hover {
+    background-color: #f0f0f0; 
+    color: #000; 
+  }
