@@ -21,8 +21,8 @@ const Header = () => {
                 Experience energy independence and sustainability like never before.
             </p>
             <div className='buttons_container'>
-                <Link to='services' className='btn'>Our Services</Link>
-                <Link to ='contacts' className='btn btn__primary'>Contact Us</Link>
+                <Link to='services' className='btn' id='serv-btn'>Our Services</Link>
+                <Link to ='contacts' className='btn btn__primary' id='serv-btn'>Contact Us</Link>
             </div>
         </div>
         <div className='column'>

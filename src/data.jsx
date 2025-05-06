@@ -10,7 +10,18 @@ export const navTabs = [
     {name:"About Us",id:'about'},
     {name:"Services",id:'services'},
     {name:"Team",id:'team'},
-    {name:"GreenProject",id:'project'},
+    {name:"GreenProject",id:'project' ,dropdown:[
+      {
+        title:"Solar Initiative",
+        description:"Learn about solar energy project",
+        image:panel,
+      },
+      {
+        title:"Recycling Drive",
+        description:"Join the community recycling effort.",
+        image:turbine,
+      }
+    ] },
     {name:"WasteMarketPlace",id:'testimonial'},
     {name:"FAQ",id:'faq'},
     {name:"Contact",id:'contact'},

@@ -49,6 +49,10 @@
 .navbar .menu_btn{
     font-size: 2rem;
 }
+#box-btn{
+    color: white;
+    background-color: green;
+}
 
 .sidebar_overlay{
     position: fixed;
@@ -60,6 +64,35 @@
     z-index: 200;
     min-height: 100vh;
     display: none;
+}
+.nav-item{
+    position:absolute;
+    padding:10px;
+}
+.dropdown-cards{
+    position:absolute;
+    top:100%;
+    display:flex;
+    gap:5px;
+    background-color: white;
+   
+    z-index:999;
+}
+.card{
+    width:300px;
+    height:200px;
+    padding:20px;
+    border-radius: 3px;
+    text-align: center;
+    color: green;
+}
+.card p{
+    color:white
+}
+.card img{
+    width:100%;
+    height:100px;
+   
 }
 @media (max-width: 1000px){
     .navbar{
@@ -93,6 +126,7 @@
     .sidebar_overlay{
         display: block;
     }
+    
 }
 
 @media (max-width: 500px){

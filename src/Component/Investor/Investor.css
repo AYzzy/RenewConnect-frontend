@@ -1,0 +1,51 @@
+.section-container{
+    background-color: rgb(5, 74, 5);
+    display: flex; 
+    justify-content:space-around; 
+    align-items: center;
+    color: green;
+    padding: 2rem;
+    height: 80vh;
+  }
+  .section{
+      max-width: 45%;
+      text-align: center;
+      border: 1px solid black;
+      padding: 2rem;
+      margin: 10px;
+  }
+  .btn-success{
+    font-size: large;
+  }
+  .section-header{
+    color: white;
+    margin-bottom: 20px;
+  }
+  .section h2{
+    margin-bottom: 20px;
+    color: white;
+  }
+  .section h3{
+    margin-bottom: 20px;
+    color: white;
+    padding: 3px;
+  }
+  .section p{
+    margin-bottom: 20px;
+    color: white;
+  }
+  .section-title{
+   margin-top: 150px;
+  justify-items: center;
+  
+  }
+  .section-title h1{
+    color: green;
+  }
+  .section-title p{
+    color: white;
+  }
+  #sign-btn{
+    color: white;
+    background-color: green;
+  }

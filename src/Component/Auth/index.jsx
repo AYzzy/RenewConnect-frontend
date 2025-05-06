@@ -46,7 +46,11 @@ const AuthForm = () => {
         <h2>{isLogin ? 'Login' : 'Sign Up'}</h2>
 
         {!isLogin && (
-          <input type="text" placeholder="Full Name" required />
+           <>
+           < input type="text" name="username" placeholder="Username" required/>
+           < input type="text" name="fullname" placeholder="Fullname" required/>
+           <input type="text" name="phoneno" placeholder="Phone No" required/>
+       </>
         )}
 
         <input type="email" placeholder="Email" required value={email} onChange={(e)=>setEmail(e.target.value)}/>

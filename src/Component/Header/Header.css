@@ -44,6 +44,10 @@
     overflow: hidden;
     border-radius: var(--radius-5);
 }
+#serv-btn{
+    color: white;
+    background-color: green;
+}
 
 
 @media(max-width:900px){

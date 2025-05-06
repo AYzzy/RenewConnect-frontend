@@ -1,4 +1,4 @@
- import React, { useEffect } from 'react'
+ import React, { useState, useEffect } from 'react'
  import './Navbar.css'
  import {navTabs} from '../../data'
  import { Link } from 'react-router-dom'
@@ -9,6 +9,8 @@ import {useNavigate} from 'react-router-dom'
 import AuthForm from '../Auth'
 
  const  Navbar = () => {
+    const [hovered, setHovered] = useState(null)
+
     const [open,setOpen] = React.useState(false)
     const [activeNavbar, setActiveNavbar] = React.useState(false)
     const handleScroll = () => {
@@ -44,21 +46,36 @@ import AuthForm from '../Auth'
           <Link
             to={tab.id}
             className='tab'
+            className='nav-Item'
+            onMouseEnter={() => setHovered(tab.name)}
+            onMouseLeave={() => setHovered(null)}
             activeClass='g-text'
             smooth={true}
             spy={true}
             offset={-70}
             onClick={() => setOpen(!open)}
-            key={index} 
+            key={index}
+            
             >
             {tab.name}
+            {tab.dropdown && hovered === tab.name && (
+              <div className='dropdown-cards'>
+                  {tab.dropdown.map((item, idx) =>(
+                    <div className='card' key={idx}>
+                        <img src={item.image} alt={item.title}/>
+                        <h4>{item.title}</h4>
+                        <p>{item.description}</p>
+                    </div> 
+                  ))}
+              </div>
+            )}
           </Link>
         ))
         }
       </div>
       <div className='box'>
-        <Link to='/Login' className='btn contact_btn'>Login</Link>
-        <Link to ='/Getstarted' className='btn contact_btn'>Get Started</Link>
+        <Link to='/Login' className='btn contact_btn' id='box-btn'>Login</Link>
+        <Link to ='/Getstarted' className='btn contact_btn' id='box-btn'>Get Started</Link>
         <div 
           className='icon_container menu_btn'
           onClick={() => setOpen(!open)}
