@@ -1,7 +1,9 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { User, Briefcase, Sun, Recycle } from "../../assets"; // Import your icons from the assets folder
+// import { Sun} from "../../assets/index;js"; // Assuming you have a Sun icon in your assets
+// import { Briefcase, Recycle } from "react-icons/fi";
 import "./RoleSelection.css"; 
+
 const RoleSelection = () => {
   const navigate = useNavigate();
 
@@ -9,25 +11,25 @@ const RoleSelection = () => {
     {
       title: "Individual User",
       description: "Browse and invest in sustainable projects",
-      icon: <User className="icon" />,
+      // icon: <user className="icon" />,
       path: "/dashboard/user",
     },
     {
       title: "Investor",
       description: "Fund sustainable projects and track investments",
-      icon: <Briefcase className="icon" />,
+      // icon: <Briefcase className="icon" />,
       path: "/dashboard/investor",
     },
     {
       title: "Solar Company",
       description: "List solar projects and find investors",
-      icon: <Sun className="icon" />,
+      // icon: <Sun className="icon" />,
       path: "/dashboard/solar",
     },
     {
       title: "Waste Buyer",
       description: "Connect with recycling initiatives",
-      icon: <Recycle className="icon" />,
+      // icon: <Recycle className="icon" />,
       path: "/dashboard/waste",
     },
   ];

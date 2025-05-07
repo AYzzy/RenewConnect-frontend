@@ -4,7 +4,6 @@ import './WasteMarket.css';
 const WasteMarket = () => {
   const [offers, setOffers] = useState([]);
   const [newOffer, setNewOffer] = useState({
-    user: 'user1',
     wasteType: '',
     quantity: '',
     price: '',
@@ -15,24 +14,59 @@ const WasteMarket = () => {
     description: '',
   });
   const [editOfferId, setEditOfferId] = useState(null);
+  const [error, setError] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [userId, setUserId] = useState(null);
+  const [wasteOfferResponse, setWasteOfferResponse] = useState({});
+  console.log(wasteOfferResponse)
 
-  // Fetch all waste offers on component mount
   useEffect(() => {
-    fetchAllOffers();
+    checkAuthentication();
+    fetchOffers();
   }, []);
 
-  // Fetch all waste offers from the backend
-  const fetchAllOffers = async () => {
+  const checkAuthentication = () => {
+    const token = localStorage.getItem('token');
+    const storedUserId = localStorage.getItem('userId'); // Adjust if userId is stored differently
+    if (token && storedUserId) {
+      setIsAuthenticated(true);
+      setUserId(storedUserId);
+    } else {
+      setIsAuthenticated(false);
+      setError('You must be logged in to perform this action.');
+    }
+  };
+
+  const getAuthHeaders = () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      console.warn('No token found in localStorage');
+    }
+    return {
+      'Content-Type': 'application/json',
+      ...(token && { Authorization: `Bearer ${token}` }),
+    };
+  };
+
+  const fetchOffers = async () => {
+    if (!isAuthenticated) return;
     try {
-      const response = await fetch('http://localhost:8058/api/waste-offers/get-All');
-      if (response.ok) {
-        const data = await response.json();
-        setOffers(data);
-      } else {
-        console.error('Failed to fetch offers');
+      const response = await fetch('http://localhost:8058/api/waste-offers', {
+        headers: getAuthHeaders(),
+      });
+      if (!response.ok) {
+        if (response.status === 401) {
+          setError('Unauthorized: Please log in again.');
+          setIsAuthenticated(false);
+        }
+        throw new Error(`HTTP error! Status: ${response.status}`);
       }
+      const data = await response.json();
+      setOffers(data);
+      setError(null);
     } catch (error) {
       console.error('Error fetching offers:', error);
+      setError('Failed to fetch offers. Please check your authentication or try again later.');
     }
   };
 
@@ -42,33 +76,51 @@ const WasteMarket = () => {
 
   const handleCreateOrUpdateOffer = async (e) => {
     e.preventDefault();
+    if (!isAuthenticated || !userId) {
+      setError('You must be logged in to create or update an offer.');
+      return;
+    }
     try {
+      const payload = {
+        wasteType: newOffer.wasteType,
+        quantity: parseFloat(newOffer.quantity),
+        price: parseFloat(newOffer.price),
+        unitOfMeasure: newOffer.unitOfMeasure,
+        location: newOffer.location,
+        wasteCondition: newOffer.wasteCondition,
+        availableFrom: newOffer.availableFrom,
+        description: newOffer.description,
+      };
+
+      let response;
       if (editOfferId) {
-        const response = await fetch('http://localhost:8058/api/waste-offers/update', {
+        // Update offer
+        response = await fetch(`http://localhost:8058/api/waste-offers/${editOfferId}`, {
           method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ id: editOfferId, ...newOffer }),
+          headers: getAuthHeaders(),
+          body: JSON.stringify(payload),
         });
-        if (response.ok) {
-          await fetchAllOffers();
-          setEditOfferId(null);
-        }
       } else {
-        const response = await fetch('http://localhost:8058/api/waste-offers/create', {
+        // Create new offer
+        response = await fetch(`http://localhost:8058/api/waste-offers/create?userId=${userId}`, {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(newOffer),
+          headers: getAuthHeaders(),
+          body: JSON.stringify(payload),
         });
-        if (response.ok) {
-          await fetchAllOffers();
-        }
+        const data = await response.json()
+        setWasteOfferResponse(data)
       }
+
+      if (!response.ok) {
+        if (response.status === 401) {
+          setError('Unauthorized: Please log in again.');
+          setIsAuthenticated(false);
+        }
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      await fetchOffers();
       setNewOffer({
-        user: 'user1',
         wasteType: '',
         quantity: '',
         price: '',
@@ -78,58 +130,54 @@ const WasteMarket = () => {
         availableFrom: '',
         description: '',
       });
+      setEditOfferId(null);
+      setError(null);
     } catch (error) {
       console.error('Error saving offer:', error);
+      setError('Failed to save offer. Please check your input or authentication.');
     }
   };
 
   const handleEditOffer = (offer) => {
+    if (!isAuthenticated) {
+      setError('You must be logged in to edit an offer.');
+      return;
+    }
     setNewOffer({
-      user: offer.user,
       wasteType: offer.wasteType,
       quantity: offer.quantity.toString(),
       price: offer.price.toString(),
       unitOfMeasure: offer.unitOfMeasure,
       location: offer.location,
       wasteCondition: offer.wasteCondition,
-      availableFrom: offer.availableFrom,
+      availableFrom: offer.availableFrom ? offer.availableFrom.split('T')[0] : '',
       description: offer.description,
     });
     setEditOfferId(offer.id);
   };
 
   const handleDeleteOffer = async (id) => {
+    if (!isAuthenticated) {
+      setError('You must be logged in to delete an offer.');
+      return;
+    }
     try {
-      const response = await fetch('http://localhost:8058/api/waste-offers/delete', {
+      const response = await fetch(`http://localhost:8058/api/waste-offers/${id}?userId=${userId}`, {
         method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ id }),
+        headers: getAuthHeaders(),
       });
-      if (response.ok) {
-        await fetchAllOffers();
+      if (!response.ok) {
+        if (response.status === 401) {
+          setError('Unauthorized: Please log in again.');
+          setIsAuthenticated(false);
+        }
+        throw new Error(`HTTP error! Status: ${response.status}`);
       }
+      await fetchOffers();
+      setError(null);
     } catch (error) {
       console.error('Error deleting offer:', error);
-    }
-  };
-
-  const handleLogout = async () => {
-    try {
-      const response = await fetch('http://localhost:8058/api/auth/logout', {
-        method: 'POST',
-        credentials: 'include', // Include cookies if needed for authentication
-      });
-  
-      if (response.ok) {
-        console.log('User logged out successfully');
-        window.location.href = '/auth'; // Redirect to login page
-      } else {
-        console.error('Failed to log out');
-      }
-    } catch (error) {
-      console.error('Error during logout:', error);
+      setError('Failed to delete offer. Please check your authentication.');
     }
   };
 
@@ -139,16 +187,10 @@ const WasteMarket = () => {
 
   return (
     <div className="waste-market">
-      {/* Logout Button */}
-      <div className="logout-container">
-        <button className="logout-btn" onClick={handleLogout}>
-          Logout
-        </button>
-      </div>
-
       <h1>Waste Marketplace</h1>
+      {error && <div className="error-message">{error}</div>}
 
-      
+      {/* Create/Update Waste Offer Form */}
       <section className="offer-form">
         <h2>{editOfferId ? 'Update Waste Offer' : 'Create Waste Offer'}</h2>
         <form onSubmit={handleCreateOrUpdateOffer}>
@@ -259,7 +301,9 @@ const WasteMarket = () => {
             />
           </div>
           <div className="form-actions">
-            <button type="submit">{editOfferId ? 'Update Offer' : 'Create Offer'}</button>
+            <button type="submit" disabled={!isAuthenticated}>
+              {editOfferId ? 'Update Offer' : 'Create Offer'}
+            </button>
             {editOfferId && (
               <button
                 type="button"
@@ -267,7 +311,6 @@ const WasteMarket = () => {
                 onClick={() => {
                   setEditOfferId(null);
                   setNewOffer({
-                    user: 'user1',
                     wasteType: '',
                     quantity: '',
                     price: '',
@@ -285,23 +328,44 @@ const WasteMarket = () => {
           </div>
         </form>
       </section>
-
-      {/* Waste Offer History */}
-      <section className="offer-history">
-        <h2>Waste Offer History</h2>
-        {getWasteOfferHistory().length ? (
-          getWasteOfferHistory().map((offer) => (
-            <div key={offer.id} className="history-item">
-              <p>
-                <strong>{offer.wasteType}</strong> - {offer.quantity} kg - ${offer.price} by {offer.user} on{' '}
-                {new Date(offer.createdAt).toLocaleString()}
-              </p>
-            </div>
-          ))
-        ) : (
-          <p>No history available.</p>
-        )}
-      </section>
+    
+<section className="offer-history">
+  <h2>Waste Offer History</h2>
+  <div>
+    {Object.keys(wasteOfferResponse).length > 0 ? (
+      <div className="history-item">
+        <p>
+          <strong>{wasteOfferResponse.wasteType}</strong> - {wasteOfferResponse.quantity} kg - ${wasteOfferResponse.price} - {wasteOfferResponse.unitOfMeasure}<br />
+          Location: {wasteOfferResponse.location}<br />
+          Condition: {wasteOfferResponse.wasteCondition}<br />
+          Available From: {wasteOfferResponse.availableFrom ? new Date(wasteOfferResponse.availableFrom).toLocaleDateString() : 'N/A'}<br />
+          Description: {wasteOfferResponse.description}<br />
+          Created: {wasteOfferResponse.createdAt ? new Date(wasteOfferResponse.createdAt).toLocaleString() : 'N/A'}
+        </p>
+      </div>
+    ) : null}
+  </div>
+  {getWasteOfferHistory().length || Object.keys(wasteOfferResponse).length > 0 ? (
+    getWasteOfferHistory().map((offer) => (
+      <div key={offer.id} className="history-item">
+        <p>
+          <strong>{offer.wasteType}</strong> - {offer.quantity} kg - ${offer.price} on{' '}
+          {new Date(offer.createdAt).toLocaleString()}
+        </p>
+        <div className="history-actions">
+          <button onClick={() => handleEditOffer(offer)} disabled={!isAuthenticated}>
+            Edit
+          </button>
+          <button onClick={() => handleDeleteOffer(offer.id)} disabled={!isAuthenticated}>
+            Delete
+          </button>
+        </div>
+      </div>
+    ))
+  ) : (
+    <p>No history available.</p>
+  )}
+</section>
     </div>
   );
 };

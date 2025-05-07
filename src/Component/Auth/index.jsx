@@ -32,7 +32,7 @@ const AuthForm = () => {
     e.preventDefault();
     if (isLogin) {
       console.log('Logging in...');
-      navigate('/marketplace'); 
+      navigate('/role-selection'); 
     } else {
       console.log('Signing up...');
       try {
