@@ -6,7 +6,7 @@
 
 .logo .icon {
     font-size: 2rem;
-    color: white; 
+    color: green; 
 }
 
 .logo .name {
@@ -14,7 +14,7 @@
 }
 
 .logo .color_primary {
-    color: white; 
+    color:green; 
 }
 .color_primary{
     color: green; 

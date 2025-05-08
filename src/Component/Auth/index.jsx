@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './AuthForm.css';
 import { useNavigate } from 'react-router-dom';
+import Logo from '../Logo';
 
 const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -62,6 +63,7 @@ const AuthForm = () => {
 
   return (
     <div className="auth-container">
+    <Logo/>
       <form onSubmit={handleSubmit} className="auth-form">
         <h2>{isLogin ? 'Login' : 'Sign Up'}</h2>
 
