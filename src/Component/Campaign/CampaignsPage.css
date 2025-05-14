@@ -1,0 +1,79 @@
+/* src/pages/CampaignsPage.css */
+.campaigns-page {
+    padding-top: 2rem;
+    padding-bottom: 4rem;
+  }
+  
+  .campaigns-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+  
+  .campaigns-header h1 {
+    font-size: 2.5rem;
+    color: var(--color-primary-accent);
+  }
+  
+  .campaigns-header p {
+    font-size: 1.1rem;
+    color: var(--color-muted);
+    max-width: 700px;
+    margin: 0.5rem auto 0;
+  }
+  
+  .campaigns-filters {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2.5rem;
+    gap: 1rem;
+  }
+  
+  .campaigns-filters .search-input {
+    padding: 0.8rem 1.2rem;
+    border-radius: var(--radius-2);
+    border: 1px solid var(--color-ui-variant);
+    background-color: var(--color-ui-secondary);
+    color: var(--color-text);
+    font-size: 1rem;
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  .campaigns-filters .search-input:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px var(--color-primary-accent);
+  }
+  
+  .campaigns-grid {
+    /* grid-container class from index.css handles columns */
+  }
+  
+  .no-campaigns-message {
+    text-align: center;
+    font-size: 1.2rem;
+    color: var(--color-muted);
+    padding: 3rem 0;
+  }
+  
+  @media (max-width: 768px) {
+    .campaigns-header h1 {
+      font-size: 2rem;
+    }
+    .campaigns-filters {
+      flex-direction: column;
+      align-items: center;
+    }
+    .campaigns-filters .search-input {
+      max-width: 100%;
+    }
+    .grid-container-cols-3 { /* From index.css, override for this page if needed */
+      grid-template-columns: 1fr; /* Stack on mobile */
+    }
+  }
+  
+  @media (min-width: 769px) and (max-width: 1023px) {
+      .grid-container-cols-3 {
+          grid-template-columns: repeat(2, 1fr); /* 2 columns on tablets */
+      }
+  }
+  

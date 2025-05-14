@@ -10,6 +10,7 @@ import WasteMarket from "./Component/Waste";
 import Renewable from "./Component/Renewable";
 import Footer from "./Component/Footer";
 import RoleSelection from "./Component/RoleSelection";
+import CampaignsPage from "./Component/Campaign/CampaignsPage";
 
 const App = () => {
   return (
@@ -30,6 +31,7 @@ const App = () => {
             }
           />
           <Route path="/marketplace" element={<WasteMarket />} />
+          <Route path="/campaigns" element={<CampaignsPage />} />
         </Route>
 
         {/* Routes with Header but without Navbar */}
