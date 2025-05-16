@@ -37,6 +37,7 @@ const App = () => {
         {/* Routes with Header but without Navbar */}
         <Route path="/auth" element={<AuthForm />} />
         <Route path="/role-selection" element={<RoleSelection />} />
+        
       </Routes>
     </Router>
   );
